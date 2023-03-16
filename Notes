@@ -1,0 +1,15 @@
+Steps
+-----
+
+- youtube tute by larave guy, including how to setup deploy script: https://www.youtube.com/watch?v=dzD7HI5lI1M
+
+Configure server provider:
+- For hetzner you will need an api key from hertzner
+
+- You cannot install a managed DB when provisioning with Forge.
+- Forge adds a default site when you add a server. You can access it by accessing the server's IP. It contains
+instructions on how to setup sites etc.
+
+
+sudo password: 9CTy7FZwViBllkM6JU8t
+Database password: vxfRVAc1Cf6gox1l7l8w
