@@ -9,7 +9,29 @@ Configure server provider:
 - You cannot install a managed DB when provisioning with Forge.
 - Forge adds a default site when you add a server. You can access it by accessing the server's IP. It contains
 instructions on how to setup sites etc.
+- You might want to make sure the PHP version you are installing on the server is compatible with the Laravel version
+you are using.
 
+- There is a hidden default site which is there to drop any malicious requests to your server.
 
 sudo password: 9CTy7FZwViBllkM6JU8t
 Database password: vxfRVAc1Cf6gox1l7l8w
+
+
+New Sites
+--------
+Aliases - typically used when running a multi-tenant application with a coiple of subdomains.
+Project type - different laravel application types
+Web directory - web root.
+Allow Wildcard Sub-Domains - where users can create their own site and register their own subdomains as part of a multi-tenant
+site.
+Use Website isolation - Uses a separate FPM process. May be used if you want to allow user provided application code and
+you want to mitigate the possibilty of maliciouse code being included. When using Webiste isolation, this would be run
+on a separate process.
+Create Database should be checked if you want to connect a db to a site automatically when using the Wordpress option
+- You will need to create an A-record for your domain name to point the domain to the server's ip.
+Generate Deploy Key - an advanced feature to be used when giving forge access to a specific repo which isn't owned by
+connected repo.
+- By default forge does a 'shallow clone' when cloning the repo for the first time meaning that you will not get the
+full commit history.
+- Forge will automatically create an ENV file vieable in the Environment tab.
