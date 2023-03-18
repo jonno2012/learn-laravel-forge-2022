@@ -29,9 +29,21 @@ Use Website isolation - Uses a separate FPM process. May be used if you want to 
 you want to mitigate the possibilty of maliciouse code being included. When using Webiste isolation, this would be run
 on a separate process.
 Create Database should be checked if you want to connect a db to a site automatically when using the Wordpress option
+- When selecting 'App' as the site type, it  will create a database?? (not sure). You may have to select 'Web site' or whatever
+it is called.It will also give you the option of installing wordpress and phpmyadmin if you select 'App'.
 - You will need to create an A-record for your domain name to point the domain to the server's ip.
 Generate Deploy Key - an advanced feature to be used when giving forge access to a specific repo which isn't owned by
 connected repo.
 - By default forge does a 'shallow clone' when cloning the repo for the first time meaning that you will not get the
 full commit history.
 - Forge will automatically create an ENV file vieable in the Environment tab.
+
+Deployment
+----------
+- The forge variables are added to the deploy script to give deploy functionality. See forge docs for more info
+
+Commands
+--------
+The 'Commands' tab shows a command line which can be used to run one of commands on the site. It could be used for things
+like seeding DBs for example.
+- Forge will mark a command as failed if it takes over 2 mins, even if it succeeds eventually.
