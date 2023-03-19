@@ -47,3 +47,71 @@ Commands
 The 'Commands' tab shows a command line which can be used to run one of commands on the site. It could be used for things
 like seeding DBs for example.
 - Forge will mark a command as failed if it takes over 2 mins, even if it succeeds eventually.
+
+- we can add redirects from the Redirects tab. regular expressions can be used to add capture groups.
+*  to add more complex rules, ssh into server and go to the nginx conf files /etc/nginx/forge-conf/jrhilldev/server. see nginx
+redirect page in docs for how to add rules.
+
+- we can restrict access by going to the Security panel and adding name and passwords. this will add a HTTP Basic-Auth login prompt.
+Security rules are kept in /etc/nginx/forge-conf/jrhilldev/server
+
+- To secure site using SSL go to SSL tab. 'Let's Encrypt' will generate, install and refresh SSL cert. Use the other options to import your own.
+It will keep refreshing until you cancel your forge subscription. 'Create Signing Request' will create private key that we can use  to
+get a cert. Then we can go to 'Install Existing' and install our own. Or go straight to Install Existing if you already have a certificate.
+
+- Databases can be added to the same server or you can provision your own db server which can be connected to using a VPN. The password for
+the DB will have been emailed to you when you provisioned the server. The control panel allows you to create users/permissions etc.
+Externally created DBS can be 'imported' using the 'Sync' feature.
+
+- We can schedule cron jobs on the Scheduler panel. * you can see the crons which have been generated in the /etc/crontab file. * Make sure
+that if you remove a user their tasks are removed as well.
+
+- The Queue tab can be used to add basic config for queues and connections.
+
+- If we are going to make an application which relies on some kind of process going on in the background indefinitely, we would have to
+create a 'Daemon'. A Daemon is a background service which runs a particular service and will automatically restart it if it stops. It would apply
+to something like Horizon. If we ran the horizon start command as part of the deploy process, the deploy process would never end and if the
+horizon stopped, it would not be restarted automatically. Supervisor is a Daemon runner program which runs daemons.
+
+- We can install and manage multiple installations of PHP on the same server. It could be used, for example, to have different sites running
+on different versions of PHP. We can add Max File Upload Size and Ma Execution Time on this page. We can manage Opcache from this page.
+Some settings in here can also be used to stop malicious shit.
+
+- Recipes can be used to all sorts of things to install things. Think of them as a way to run scripts on the server as root, in order to do
+things like installing alternative DB software etc. It provides us with a bash command line session which we use to do whatever it is we need to do.
+
+- 'Circles' can be used if you are subscribed to the Business Plan. They are a way of sharing access to servers. You will be able to see who
+has made changes and various other things.
+
+- Forge provides automated db backups as part of the Business Plan. They do backups on schedule and can be configured to backup to any S3 compatible
+data provider. It creates a bash script which is ran by a cron job. It can be configured to provide failure notifications when a backup fails.
+
+- ACtive server monitoring is provided as part of the Business Plan. CPU Load Average monitors how much Mem has been used on average over the
+last minute. A good rule of thumb is to notify when over 70% of CPU has
+been used. We can mitigate Used Disk Space by storing files on something like Amazon S3. If it nears 100% it there is a good chance the server
+will crash. Use memory will be higher if we have a DB on the same  server and it will need to have a higher threshold.
+
+- Laravel Octane superchargers site by loading it once, keeping it in memory and then serving it at very fast speeds. It can only be enabled
+when creating a new site. It will not use PHP-FPM. It uses Roadrunner or Swool and uses Nginx as a Reverse Proxy to route requests to it.
+
+Advanced Servers:
+- Removing servers from forge will remove them from the server provider.
+- Forge can configure different types: App Server, Web server etc.
+- 'App' provides everything we need to run our own app. 'Web' only runs PHP and Nginx. 'Worker' only runs queues.
+
+- Forge has load-balancing config. You select 'Load Balancer' type when creating a new server. You add another server, run the same site
+on the other server simultaneously, and change the DNS of your site to point to the load balancer.
+
+- MeiliSearch is an opensource, fast search engine which integrates with websites and which can integrate with laravel scout. It is used
+to search website data and integrates with the db.
+
+- By default the SSH on forge is secured by default so you can't connect via ssh if there is no key installed. The only way you can connect
+using a db client is via SSH. It is possible to allow access to the db from your server, to your db server. THis is done in the Network tab.
+There are other config details like adding firewall rules in general. You should make sure the Forge ip addresses are allowed before and after
+making any changes to the firewall rules.
+
+- It can be used to manage personal composer packages etc. See the Packages tab.
+
+- You can add SSH keys in the normal way in the SSH Keys tab.
+
+- We can use Nginx templates in the Nginx Templates tab. We can create our own Nginx Template and use them when we add a site.
